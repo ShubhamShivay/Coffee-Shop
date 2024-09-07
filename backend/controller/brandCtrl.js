@@ -66,9 +66,17 @@ export const updateBrand = asyncHandler(async (req, res) => {
     throw new Error("Brand not found.");
   }
 
-  const updatedBrand = await Brand.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-  });
+  const data = lowerCaseExceptPassword(req.body);
+
+  const updatedBrand = await Brand.findByIdAndUpdate(
+    req.params.id,
+    {
+      ...data,
+    },
+    {
+      new: true,
+    }
+  );
 
   res.json({
     status: "Success",

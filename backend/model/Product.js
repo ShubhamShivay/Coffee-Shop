@@ -16,14 +16,12 @@ const ProductSchema = new Schema(
       type: String,
       required: true,
       default: "no brand",
-      
-      enum: ["no brand", "npple", "samsung", "google", "xiaomi", "huawei"],
+      ref: "Brand",
     },
     category: {
       type: String,
       required: true,
-      default: "no category",
-      enum: ["no category", "food", "fruit", "vegitable", "drink", "others"],
+      ref: "Category",
     },
     description: {
       type: String,

@@ -13,7 +13,7 @@ const userRouter = express.Router();
 
 userRouter.post("/api/users/register", registerUserCtrl);
 userRouter.post("/api/users/login", loginUserCtrl);
-userRouter.get("/api/users/all", isLoggedIn, getAllUsersCtrl);
+userRouter.get("/api/users/all", isLoggedIn, isAdmin, getAllUsersCtrl);
 userRouter.get("/api/users/:id", isLoggedIn, getUserCtrl);
 userRouter.post("/api/users/:id", isLoggedIn, updateUserCtrl);
 

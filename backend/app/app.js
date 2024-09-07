@@ -20,7 +20,7 @@ app.use(cors());
 // Pass incoming Data
 app.use(express.json());
 
-app.use("/api/users", userRoute);
+app.use("/api/user", userRoute);
 app.use("/api/product", productRouter);
 app.use("/api/brand", brandRouter);
 

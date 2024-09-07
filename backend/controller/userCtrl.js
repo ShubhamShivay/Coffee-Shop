@@ -34,7 +34,7 @@ export const registerUserCtrl = asyncHandler(async (req, res) => {
   res.status(201).json({
     message: "Register User",
     user: user,
-    token: generateToken(user._id),
+    token: generateToken(user),
   });
 });
 

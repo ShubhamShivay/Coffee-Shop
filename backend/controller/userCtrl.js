@@ -2,6 +2,7 @@ import User from "../model/User.js";
 import asyncHandler from "express-async-handler";
 import bcrypt from "bcryptjs";
 import generateToken from "../utils/generateToken.js";
+import lowerCaseExceptPassword from "../utils/lowerCaseExceptPassword.js";
 
 export const registerUserCtrl = asyncHandler(async (req, res) => {
   const { fullname, email, password } = req.body;
@@ -101,12 +102,38 @@ export const updateUserCtrl = asyncHandler(async (req, res) => {
     throw new Error("User not found");
   }
 
-  const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-  });
+  let data = lowerCaseExceptPassword(req.body);
+  console.log(data);
+
+  const updatedUser = await User.findByIdAndUpdate(
+    req.params.id,
+    {
+      ...data,
+    },
+    {
+      new: true,
+    }
+  );
 
   res.json({
     message: "Update User",
     data: updatedUser,
+  });
+});
+
+//! @desc Delete user
+//! @route DELETE /api/users/:id
+//! @access Private/Admin
+
+export const deleteUserCtrl = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+  await user.remove();
+  res.json({
+    message: "Delete User",
+    data: user,
   });
 });

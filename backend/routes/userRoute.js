@@ -7,14 +7,16 @@ import {
   getAllUsersCtrl,
   getUserCtrl,
   updateUserCtrl,
+  deleteUserCtrl,
 } from "../controller/userCtrl.js";
 
 const userRouter = express.Router();
 
-userRouter.post("/api/users/register", registerUserCtrl);
-userRouter.post("/api/users/login", loginUserCtrl);
-userRouter.get("/api/users/all", isLoggedIn, isAdmin, getAllUsersCtrl);
-userRouter.get("/api/users/:id", isLoggedIn, getUserCtrl);
-userRouter.post("/api/users/:id", isLoggedIn, updateUserCtrl);
+userRouter.post("/register", registerUserCtrl);
+userRouter.post("/login", loginUserCtrl);
+userRouter.get("/all", isLoggedIn, isAdmin, getAllUsersCtrl);
+userRouter.get("/:id", isLoggedIn, getUserCtrl);
+userRouter.put("/:id", isLoggedIn, updateUserCtrl);
+userRouter.delete("/:id", isLoggedIn, isAdmin, deleteUserCtrl);
 
 export default userRouter;

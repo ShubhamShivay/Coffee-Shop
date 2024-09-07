@@ -10,15 +10,20 @@ const ProductSchema = new Schema(
     },
     image: {
       type: String,
-      required: true,
+      //   required: true,
     },
     brand: {
       type: String,
       required: true,
+      default: "no brand",
+      
+      enum: ["no brand", "npple", "samsung", "google", "xiaomi", "huawei"],
     },
     category: {
       type: String,
       required: true,
+      default: "no category",
+      enum: ["no category", "food", "fruit", "vegitable", "drink", "others"],
     },
     description: {
       type: String,

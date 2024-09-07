@@ -6,14 +6,15 @@ import {
   getSingleProduct,
   updateProduct,
   deleteProduct,
-} from "../controller/productCtrl";
+} from "../controller/productCtrl.js";
+import { isAdmin } from "../middleware/isAdmin.js";
 
 const productRouter = express.Router();
 
-productRouter.post("/api/product/create", isLoggedIn, createProduct);
-productRouter.get("/api/product", isLoggedIn, getAllProducts);
-productRouter.get("/api/product/:id", isLoggedIn, getSingleProduct);
-productRouter.put("/api/product/:id", isLoggedIn, updateProduct);
-productRouter.delete("/api/product/:id", isLoggedIn, deleteProduct);
+productRouter.post("/create", isLoggedIn, isAdmin, createProduct);
+productRouter.get("/all", isLoggedIn, getAllProducts); 
+productRouter.get("/:id", isLoggedIn, getSingleProduct);
+productRouter.put("/:id", isLoggedIn, isAdmin, updateProduct);
+productRouter.delete("/:id", isLoggedIn, isAdmin, deleteProduct);
 
 export default productRouter;

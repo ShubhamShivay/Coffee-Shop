@@ -12,7 +12,7 @@ export const isLoggedIn = (req, res, next) => {
     throw new Error("Token expired, Please login again");
   } else {
     req.user = decodedUser;
-    // console.log(decodedUser, "payload");
+    console.log(decodedUser, "payload");
     next();
   }
 };

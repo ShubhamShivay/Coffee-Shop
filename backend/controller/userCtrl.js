@@ -103,7 +103,7 @@ export const updateUserCtrl = asyncHandler(async (req, res) => {
   }
 
   let data = lowerCaseExceptPassword(req.body);
-  console.log(data);
+  // console.log(data);
 
   const updatedUser = await User.findByIdAndUpdate(
     req.params.id,

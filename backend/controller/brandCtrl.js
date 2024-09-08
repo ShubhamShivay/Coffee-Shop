@@ -1,5 +1,6 @@
 import Brand from "../model/Brand.js";
 import asyncHandler from "express-async-handler";
+import lowerCaseExceptPassword from "../utils/lowerCaseExceptPassword.js";
 
 // ! @desc      create brand
 // ! @route     /api/brand/create
@@ -13,9 +14,10 @@ export const createBrand = asyncHandler(async (req, res) => {
   if (brandExists) {
     throw new Error("Brand already exists");
   }
-
+  // console.log(req.user._id)
   const brand = await Brand.create({
     name: name.toLowerCase(),
+    user: req.user._id,
   });
 
   res.json({
@@ -43,7 +45,8 @@ export const getAllBrands = asyncHandler(async (req, res) => {
 // ! @access    Public
 
 export const getSingleBrand = asyncHandler(async (req, res) => {
-  const brand = Brand.findById(req.params.id);
+  const brand = await Brand.findById(req.params.id);
+  // console.log("brand: ", brand);
 
   if (!brand) {
     throw new Error("Brand not found.");
@@ -67,6 +70,7 @@ export const updateBrand = asyncHandler(async (req, res) => {
   }
 
   const data = lowerCaseExceptPassword(req.body);
+  console.log("Data: ", data);
 
   const updatedBrand = await Brand.findByIdAndUpdate(
     req.params.id,

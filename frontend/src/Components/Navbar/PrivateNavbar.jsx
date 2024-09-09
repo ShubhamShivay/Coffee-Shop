@@ -79,7 +79,7 @@ const PrivateNavbar = () => {
             <CgProfile />
           </button>
           <Link
-            to="/login"
+            to="/cart"
             className="text-white bg-blue-500 hover:bg-blue-700 px-3 py-2 rounded-full"
           >
             <IoMdCart />
@@ -114,7 +114,7 @@ const PrivateNavbar = () => {
               <CgProfile className="text-white text-2xl" />
             </button>
             <Link
-              to="/profile"
+              to="/cart"
               className="text-white bg-blue-500 hover:bg-blue-700 px-3 py-2 rounded-full"
               onClick={() => setIsMenuOpen(false)}
             >

@@ -1,10 +1,46 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useMutation } from "@tanstack/react-query";
-import { registerAPI } from "../../userServices/users";
+import { registerAPI } from "../../services/user/users";
 import AlertMessage from "../Alert/AlertMessage";
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+
+// ! Motion Variants
+
+const containerVariantsLeft = {
+  hidden: {
+    opacity: 0,
+    x: "-100vw",
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { type: "spring", stiffness: 120, delay: 0.5, duration: 0.5 },
+  },
+  exit: {
+    x: "100vw",
+    transition: { ease: "easeInOut" },
+  },
+};
+
+const containerVariantsTop = {
+  hidden: {
+    opacity: 0,
+    y: "-100vh",
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 120, delay: 0.3, duration: 0.5 },
+  },
+  exit: {
+    y: "100vh",
+    transition: { ease: "easeInOut" },
+  },
+};
 
 //! Validation Schema
 
@@ -23,6 +59,8 @@ const validationSchema = Yup.object({
 
 const RegisterPage = () => {
   const [showPassword, setShowPassword] = useState(false);
+
+  const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -55,10 +93,24 @@ const RegisterPage = () => {
     },
   });
 
+  //! Redirect
+  useEffect(() => {
+    if (isSuccess) {
+      navigate("/login");
+    }
+  }, [isSuccess, navigate]);
+
   return (
     <div className="h-screen flex justify-center items-center bg-gray-100">
       <div className="max-w-md w-full p-6 bg-white rounded-lg shadow-md">
-        <h2 className="text-3xl font-bold text-gray-800 mb-4">Register</h2>
+        <motion.h2
+          variants={containerVariantsTop}
+          initial="hidden"
+          animate="visible"
+          className="text-3xl font-bold text-gray-800 mb-4"
+        >
+          Register
+        </motion.h2>
         {isError && (
           <AlertMessage type="error" message={error?.response?.data?.message} />
         )}
@@ -163,12 +215,15 @@ const RegisterPage = () => {
             </div>
           </div>
           <div className="flex items-center justify-between">
-            <button
+            <motion.button
+              variants={containerVariantsLeft}
+              initial="hidden"
+              animate="visible"
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
             >
               Register
-            </button>
+            </motion.button>
             <Link
               to={"/login"}
               className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"

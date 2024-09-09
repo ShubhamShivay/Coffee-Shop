@@ -1,4 +1,4 @@
-import { Base_URL } from "../utils/url";
+import { Base_URL } from "../../utils/url";
 import axios from "axios";
 
 //! Login

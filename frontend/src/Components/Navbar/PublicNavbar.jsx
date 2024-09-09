@@ -61,7 +61,7 @@ const PublicNavbar = () => {
               Login
             </Link>
             <Link
-              to="/login"
+              to="/register"
               className="text-white bg-blue-500 hover:bg-blue-700 px-3 py-1 rounded"
             >
               Register

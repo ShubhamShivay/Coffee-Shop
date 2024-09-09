@@ -10,7 +10,9 @@ const ProductSchema = new Schema(
     },
     image: {
       type: String,
-      //   required: true,
+      required: true,
+      default:
+        "https://cdn.pixabay.com/photo/2018/01/31/09/57/coffee-3120750_1280.jpg",
     },
     brand: {
       type: String,

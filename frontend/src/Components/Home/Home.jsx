@@ -2,8 +2,22 @@ import React from "react";
 import { motion } from "framer-motion";
 import ProductCard from "../Cards/ProductCard";
 import { Link } from "react-router-dom";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { getProductsAPI } from "../../services/product/productService";
 
 export const Home = () => {
+  //! ---------------------------------------
+  //! Fetching Products
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["products"],
+    queryFn: getProductsAPI,
+  });
+
+  // console.log(data);
+  //! -------------------------------------
+
+  
+
   //! Function for scrolling to products
   const handleScroll = () => {
     const products = document.getElementById("products");
@@ -48,8 +62,7 @@ export const Home = () => {
               className="text-white text-lg bg-black  px-5 py-3 rounded-sm "
               whileHover={{
                 scale: 1.1,
-                testShadow: "0px 0px 8px rgb(255,255,255)",
-                boxShadow: "0px 0px 8px rgb(255,255,255)",
+
                 transition: {
                   yoyo: 10,
                 },
@@ -70,9 +83,10 @@ export const Home = () => {
               className="text-white text-lg bg-black  px-5 py-3 rounded-sm"
               whileHover={{
                 scale: 1.1,
-                testShadow: "0px 0px 8px rgb(255,255,255)",
-                boxShadow: "0px 0px 8px rgb(255,255,255)",
-                yoyo: Infinity,
+
+                transition: {
+                  yoyo: 10,
+                },
               }}
               initial={{ x: "100vw" }}
               animate={{ x: 0 }}
@@ -116,29 +130,28 @@ export const Home = () => {
           Our coffee is handcrafted with love and passion.
         </p>
         <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4">
+          {data?.products?.map((product) => {
+            return (
+              <ProductCard
+                key={product._id}
+                name={product.name}
+                price={product.price}
+                image={
+                  product.image ||
+                  "https://cdn.pixabay.com/photo/2018/01/31/09/57/coffee-3120750_1280.jpg"
+                }
+                description={product.description}
+              />
+            );
+          })}
+
           <ProductCard
             id={2}
             name="Cappuccino"
             image="https://cdn.pixabay.com/photo/2018/01/31/09/57/coffee-3120750_1280.jpg"
             description="Cappuccino is a coffee-based drink made with equal parts
           of espresso and steamed milk."
-            price="$5.99"
-          />
-          <ProductCard
-            id={2}
-            name="Cappuccino"
-            image="https://cdn.pixabay.com/photo/2018/01/31/09/57/coffee-3120750_1280.jpg"
-            description="Cappuccino is a coffee-based drink made with equal parts
-          of espresso and steamed milk."
-            price="$5.99"
-          />
-          <ProductCard
-            id={2}
-            name="Cappuccino"
-            image="https://cdn.pixabay.com/photo/2018/01/31/09/57/coffee-3120750_1280.jpg"
-            description="Cappuccino is a coffee-based drink made with equal parts
-          of espresso and steamed milk."
-            price="$5.99"
+            price="5.99"
           />
         </div>
       </div>

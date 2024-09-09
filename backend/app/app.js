@@ -12,6 +12,7 @@ import userRoute from "../routes/userRoute.js";
 import productRouter from "../routes/productRoute.js";
 import brandRouter from "../routes/brandRoute.js";
 import categoryRouter from "../routes/categoryRoute.js";
+import cartRoute from "../routes/cartRoute.js";
 
 dbConnect();
 const app = express();
@@ -31,6 +32,7 @@ app.use("/api/user", userRoute);
 app.use("/api/product", productRouter);
 app.use("/api/brand", brandRouter);
 app.use("/api/category", categoryRouter);
+app.use("/api/cart", cartRoute);
 
 //! Error Handling
 app.use(notFound);

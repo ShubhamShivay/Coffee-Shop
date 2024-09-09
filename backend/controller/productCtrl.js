@@ -25,7 +25,7 @@ export const createProduct = asyncHandler(async (req, res) => {
     category: category.toLowerCase(),
     description: description.toLowerCase(),
     price,
-    countInStock, 
+    countInStock,
   });
 
   res.json({
@@ -53,7 +53,7 @@ export const getAllProducts = asyncHandler(async (req, res) => {
 // ! @access    Public
 
 export const getSingleProduct = asyncHandler(async (req, res) => {
-  const product = Product.findById(req.params.id);
+  const product = await Product.findById(req.params.id);
 
   if (!product) {
     throw new Error("Product not found.");
@@ -108,7 +108,7 @@ export const deleteProduct = asyncHandler(async (req, res) => {
     throw new Error("Product not found.");
   }
 
-  await product.remove();
+  await product.deleteOne();
 
   res.json({
     status: "Success",

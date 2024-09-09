@@ -1,6 +1,6 @@
-import category from "../model/Category";
+import Category from "../model/Category.js";
 import asyncHandler from "express-async-handler";
-import lowerCaseExceptPassword from "../utils/lowerCaseExceptPassword";
+import lowerCaseExceptPassword from "../utils/lowerCaseExceptPassword.js";
 
 // ! @desc      create category
 // ! @route     /api/category/create
@@ -10,12 +10,12 @@ export const createCategory = asyncHandler(async (req, res) => {
   const { name } = req.body;
 
   //! check if category already exists
-  const categoryExists = await category.findOne({ name: name.toLowerCase() });
+  const categoryExists = await Category.findOne({ name: name.toLowerCase() });
   if (categoryExists) {
     throw new Error("Category already exists");
   }
-
-  const category = await category.create({
+  // console.log(req.user._id)
+  const category = await Category.create({
     name: name.toLowerCase(),
     user: req.user._id,
   });
@@ -32,7 +32,7 @@ export const createCategory = asyncHandler(async (req, res) => {
 // ! @access    Public
 
 export const getAllCategories = asyncHandler(async (req, res) => {
-  const categories = await category.find();
+  const categories = await Category.find();
   res.json({
     status: "Success",
     message: "All categories fetched sucessfully",
@@ -45,15 +45,15 @@ export const getAllCategories = asyncHandler(async (req, res) => {
 // ! @access    Public
 
 export const getSingleCategory = asyncHandler(async (req, res) => {
-  const category = category.findById(req.params.id);
-
+  const category = await Category.findById(req.params.id);
+  // console.log(category);
   if (!category) {
     throw new Error("Category not found.");
   }
   res.json({
     status: "Success",
     message: "Category fetched successful",
-    category,
+    data: category,
   });
 });
 
@@ -62,7 +62,7 @@ export const getSingleCategory = asyncHandler(async (req, res) => {
 // ! @access    Admin only
 
 export const updateCategory = asyncHandler(async (req, res) => {
-  const category = await category.findById(req.params.id);
+  const category = await Category.findById(req.params.id);
 
   if (!category) {
     throw new Error("Category not found.");
@@ -70,7 +70,7 @@ export const updateCategory = asyncHandler(async (req, res) => {
 
   const data = lowerCaseExceptPassword(req.body);
 
-  const updatedCategory = await category.findByIdAndUpdate(
+  const updatedCategory = await Category.findByIdAndUpdate(
     req.params.id,
     {
       ...data,
@@ -92,13 +92,13 @@ export const updateCategory = asyncHandler(async (req, res) => {
 // ! @access    Admin only
 
 export const deleteCategory = asyncHandler(async (req, res) => {
-  const category = await category.findById(req.params.id);
+  const category = await Category.findById(req.params.id);
 
   if (!category) {
     throw new Error("Category not found.");
   }
 
-  await category.findByIdAndDelete(req.params.id);
+  await category.deleteOne();
 
   res.json({
     status: "Success",

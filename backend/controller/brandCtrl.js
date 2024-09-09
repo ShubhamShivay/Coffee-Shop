@@ -54,7 +54,7 @@ export const getSingleBrand = asyncHandler(async (req, res) => {
   res.json({
     status: "Success",
     message: "Brand fetched successful",
-    brand,
+    data: brand,
   });
 });
 
@@ -94,13 +94,14 @@ export const updateBrand = asyncHandler(async (req, res) => {
 // ! @access    Admin only
 
 export const deleteBrand = asyncHandler(async (req, res) => {
-  const brand = await Brand.findById(req.params.id);
+  const brand = await Brand.findByIdAndDelete(req.params.id);
+  // console.log(brand);
 
   if (!brand) {
     throw new Error("Brand not found.");
   }
 
-  await brand.remove();
+  // await brand.deleteOne();
 
   res.json({
     status: "Success",

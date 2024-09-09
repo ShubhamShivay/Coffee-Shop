@@ -11,6 +11,7 @@ import {
 import userRoute from "../routes/userRoute.js";
 import productRouter from "../routes/productRoute.js";
 import brandRouter from "../routes/brandRoute.js";
+import categoryRouter from "../routes/categoryRoute.js";
 
 dbConnect();
 const app = express();
@@ -23,6 +24,7 @@ app.use(express.json());
 app.use("/api/user", userRoute);
 app.use("/api/product", productRouter);
 app.use("/api/brand", brandRouter);
+app.use("/api/category", categoryRouter);
 
 //! Error Handling
 app.use(notFound);

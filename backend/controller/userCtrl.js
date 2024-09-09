@@ -86,6 +86,7 @@ export const getUserCtrl = asyncHandler(async (req, res) => {
     throw new Error("User not found");
   }
   res.json({
+    status: "Success",
     message: "Get User",
     data: user,
   });
@@ -127,11 +128,12 @@ export const updateUserCtrl = asyncHandler(async (req, res) => {
 
 export const deleteUserCtrl = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
+
   if (!user) {
     res.status(404);
     throw new Error("User not found");
   }
-  await user.remove();
+  await user.deleteOne();
   res.json({
     message: "Delete User",
     data: user,

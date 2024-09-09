@@ -2,12 +2,16 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useSelector, useDispatch } from "react-redux";
 import { removeFromCart, clearCart } from "../../redux/slice/cartSlice";
+import { getCartAPI } from "../../services/cart/cart";
 
 const Cart = () => {
   // ! Get Cart state from Redux store
   const { cartItems, totalQuantity, totalPrice } = useSelector(
     (state) => state.cart
   );
+
+  // ! Get cart items from API
+  console.log(getCartAPI());
 
   const dispatch = useDispatch();
 
@@ -28,37 +32,40 @@ const Cart = () => {
       transition={{ duration: 0.5 }}
       className=" top-0 left-0 w-full h-full bg-white shadow-md p-4 md:p-6 lg:p-8 xl:p-10"
     >
-      {cartItems.length === 0 ? (
-        <p className="text-center">No items in cart.</p>
-      ) : (
-        <div className="flex flex-col">
-          {cartItems.map((item) => (
-            <div key={item.product._id} className="flex items-center mb-5">
-              <img
-                className="mr-4"
-                src={item.product.image}
-                alt={item.product.name}
-                width={100}
-              />
-              <div>
-                <h3>{item.product.name}</h3>
-                <p>{item.product.description}</p>
-                <p>Price: ${item.product.price}</p>
-                <p>Quantity: {item.quantity}</p>
-                <p>Total: ${item.product.price * item.quantity}</p>
-              </div>
-              <button onClick={() => handleRemoveFromCart(item.product._id)}>
-                Remove
-              </button>
-            </div>
-          ))}
-          <div className="mt-4">
-            <h4>Total Items: {totalQuantity}</h4>
-            <h4>Total Price: ${totalPrice}</h4>
-            <button onClick={handleClearCart}>Clear Cart</button>
+      <div className="flex justify-between items-center mx-4 p-1 pr-2 shadow-lg">
+        <div className="w-1/4">
+          <img
+            src="https://cdn.pixabay.com/photo/2018/01/31/09/57/coffee-3120750_1280.jpg"
+            alt=""
+          />
+        </div>
+        <div>
+          <h1 className="text-xl font-bold">Cappuccino</h1>
+          <p className="text-gray-500">
+            Quantity:{" "}
+            <span>
+              <select name="quantity" id="quantity">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+              </select>
+            </span>
+          </p>
+          <div className="flex justify-between">
+            <button>Delete</button>
           </div>
         </div>
-      )}
+        <div>
+          <h1 className="text-xl font-bold">₹200</h1>
+        </div>
+      </div>
     </motion.div>
   );
 };

@@ -4,10 +4,20 @@ import Logo from "../../assets/logo3.png";
 import { IoMdCart } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
 import { motion } from "framer-motion";
+import { logoutAction } from "../../redux/slice/authSlice";
+import { useDispatch } from "react-redux";
 
 const PrivateNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navItems = ["Home", "About", "Services", "Contact"];
+
+  const dispatch = useDispatch();
+  //! Logout Handler
+  const logoutHandler = () => {
+    dispatch(logoutAction());
+    // Remove the token from local storage
+    localStorage.removeItem("user");
+  };
 
   return (
     <nav className="bg-[#1B1107] p-4">
@@ -74,6 +84,13 @@ const PrivateNavbar = () => {
           >
             <IoMdCart />
           </Link>
+          <button
+            type="button"
+            className="text-white bg-blue-500 hover:bg-blue-700 px-2 py-1 rounded-full"
+            onClick={logoutHandler}
+          >
+            Logout
+          </button>
         </div>
       </div>
       {isMenuOpen && (
@@ -94,15 +111,22 @@ const PrivateNavbar = () => {
               className="text-white bg-blue-500 hover:bg-blue-700 px-3 py-2 rounded-full"
               // onClick={logoutHandler}
             >
-              <CgProfile />
+              <CgProfile className="text-white text-2xl" />
             </button>
             <Link
               to="/profile"
               className="text-white bg-blue-500 hover:bg-blue-700 px-3 py-2 rounded-full"
               onClick={() => setIsMenuOpen(false)}
             >
-              <IoMdCart />
+              <IoMdCart className="text-white text-2xl" />
             </Link>
+            <button
+              type="button"
+              className="text-white bg-blue-500 hover:bg-blue-700 px-3 py-2 rounded-full"
+              onClick={logoutHandler}
+            >
+              Logout
+            </button>
           </div>
         </div>
       )}

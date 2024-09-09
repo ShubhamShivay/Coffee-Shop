@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 
 const ProductCard = ({ id, name, description, price, image }) => {
   return (

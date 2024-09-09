@@ -32,7 +32,7 @@ export const registerUserCtrl = asyncHandler(async (req, res) => {
   });
 
   res.status(201).json({
-    message: "Register User",
+    message: "User Registration Successful",
     user: user,
     token: generateToken(user),
   });
@@ -55,7 +55,7 @@ export const loginUserCtrl = asyncHandler(async (req, res) => {
 
   if (user && (await bcrypt.compare(password, user.password))) {
     res.status(200).json({
-      message: "Login User",
+      message: "User logged in",
       user: user,
       token: generateToken(user._id),
     });
@@ -87,7 +87,7 @@ export const getUserCtrl = asyncHandler(async (req, res) => {
   }
   res.json({
     status: "Success",
-    message: "Get User",
+    message: "Profile Found",
     data: user,
   });
 });
@@ -117,7 +117,7 @@ export const updateUserCtrl = asyncHandler(async (req, res) => {
   );
 
   res.json({
-    message: "Update User",
+    message: "User Details Updated Successfully",
     data: updatedUser,
   });
 });

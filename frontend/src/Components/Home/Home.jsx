@@ -15,11 +15,12 @@ export const Home = () => {
       <div className="bg-[#2C150F] w-full flex flex-col md:flex-row px-4 min-h-screen items-center">
         <div className="flex flex-col justify-center gap-4 pt-2">
           <motion.h1
-            initial={{ y: "-100vh" }}
-            animate={{ y: 0 }}
+            initial={{ y: "-100vh", opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
             transition={{
               type: "spring",
               duration: 1.5,
+              delay: 0.1,
               stiffness: 120,
             }}
             className="text-5xl text-white font-bold pb-4 pr-4"
@@ -42,12 +43,16 @@ export const Home = () => {
           </motion.p>
           <div className="pb-4 flex flex-row justify-around">
             <motion.button
+              onClick={handleScroll}
               type="button"
               className="text-white text-lg bg-black  px-5 py-3 rounded-sm "
               whileHover={{
                 scale: 1.1,
                 testShadow: "0px 0px 8px rgb(255,255,255)",
                 boxShadow: "0px 0px 8px rgb(255,255,255)",
+                transition: {
+                  yoyo: 10,
+                },
               }}
               initial={{ x: "-100vw" }}
               animate={{ x: 0 }}
@@ -58,7 +63,7 @@ export const Home = () => {
                 stiffness: 120,
               }}
             >
-              <a onClick={handleScroll}>Order Now</a>
+              Order Now
             </motion.button>
             <motion.button
               type="button"
@@ -67,6 +72,7 @@ export const Home = () => {
                 scale: 1.1,
                 testShadow: "0px 0px 8px rgb(255,255,255)",
                 boxShadow: "0px 0px 8px rgb(255,255,255)",
+                yoyo: Infinity,
               }}
               initial={{ x: "100vw" }}
               animate={{ x: 0 }}
